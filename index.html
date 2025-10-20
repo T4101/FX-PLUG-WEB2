@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FX PLUG - Professional Forex Trading Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a472a;
+            --secondary-color: #2d5f3f;
+            --accent-color: #ffd700;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-light: #f5f5f5;
+            --bg-dark: #0a1f14;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-color) 100%);
+            color: var(--text-light);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        #login-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-color) 100%);
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .login-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            display: block;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        #main-content {
+            display: none;
+            padding-top: 80px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-color) 100%);
+            color: var(--text-light);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-logo {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .motto {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin: 2rem 0;
+            color: var(--accent-color);
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .forex-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .tips-section {
+            background: var(--bg-light);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .tip-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .about-section {
+            background: white;
+        }
+
+        .founder-card {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .founder-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 2rem;
+            border: 5px solid var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .contact-info {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .contact-number {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .contact-number:hover {
+            background: var(--secondary-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .brokers-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .broker-badge {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .logout-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-logo {
+                font-size: 2.5rem;
+            }
+
+            .motto {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="login-section">
+        <div class="login-card">
+            <img src="LOGO.jpg" alt="FX PLUG Logo" class="login-logo">
+            <div class="logo" style="text-align: center; margin-bottom: 1rem;">FX PLUG</div>
+            <h2>Login to Continue</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="error-message" id="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">FX PLUG</div>
+                    <nav>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><button class="logout-btn" id="logout-btn">Logout</button></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-logo">FX PLUG</div>
+                <p class="motto">Plan First / Then Trade</p>
+            </div>
+        </section>
+
+        <section class="forex-gallery">
+            <div class="container">
+                <div class="forex-gallery">
+                    <div class="gallery-item">
+                        <img src="t-shirt design.jpg" alt="our shirt design">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Gold Trading">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="LOGO.jpg" alt="Financial Success">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tips-section">
+            <div class="container">
+                <h2 class="section-title">Professional Trading Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3>Risk Management</h3>
+                        <p>Never risk more than 2% of your account on a single trade. Proper risk management is the foundation of long-term success in forex trading.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>Patience is Key</h3>
+                        <p>Wait for high-probability setups. Quality trades always outperform quantity. Let the market come to you.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>Follow Your Plan</h3>
+                        <p>Develop a solid trading strategy and stick to it. Emotional trading leads to losses. Trust your analysis and execute with discipline.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>Continuous Learning</h3>
+                        <p>Markets evolve constantly. Stay updated with market analysis, economic news, and refine your strategies regularly.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>Journal Your Trades</h3>
+                        <p>Document every trade with entry reasons, exit points, and outcomes. Review regularly to identify patterns and improve performance.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3>Master Your Psychology</h3>
+                        <p>Trading psychology determines success more than technical skills. Stay calm, avoid revenge trading, and accept losses as part of the process.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About the Founder</h2>
+                <div class="founder-card">
+                    <img src="profile.jpg" alt="Founder" class="founder-image">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Professional Forex Trader & Mentor</h3>
+                    <p style="margin-bottom: 1rem;">With years of experience in the forex market, our founder has built FX PLUG to provide professional trading services and education to aspiring traders. Specializing in XAUUSD trading strategies and risk management, we have helped numerous traders achieve consistent profitability.</p>
+                    <p style="margin-bottom: 2rem;">Our mission is to empower traders with the knowledge, tools, and support needed to succeed in the dynamic forex market. We believe in disciplined trading, proper risk management, and continuous improvement.</p>
+
+                    <div class="contact-info">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Contact the Founder</h3>
+                        <p style="margin-bottom: 1rem;">For inquiries, consultations, or more information:</p>
+                        <a href="https://wa.me/26663088465" class="contact-number" target="_blank">+266 63088465</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" style="background: var(--bg-light);">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>Account Management</h3>
+                        <p>Professional management of your trading account with proven strategies. Our experienced traders handle your capital with strict risk management protocols to maximize returns while minimizing exposure.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>Copy Trading</h3>
+                        <p>Mirror the trades of our experienced professionals. Benefit from expert analysis and execution while learning valuable trading techniques in real-time.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>EA Robot Programming & Sales</h3>
+                        <p>Custom Expert Advisor (EA) development and purchase of FX PLUG copyrighted robots. Automated trading solutions designed for consistent performance and optimized for various market conditions.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>Educational Programs</h3>
+                        <p>Comprehensive tutoring for beginners via Zoom. Learn forex fundamentals, technical analysis, and trading psychology. Duration: 2 months | Investment: R300 per month</p>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>Broker Advisory</h3>
+                        <p>Expert guidance on selecting the right broker for your trading needs. We analyze spreads, execution speed, regulation, and reliability to help you make informed decisions.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <h3>Risk Management Consulting</h3>
+                        <p>Personalized risk management strategies tailored to your trading style and capital. Learn position sizing, stop loss placement, and portfolio management techniques.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem;">Our Specialty: XAUUSD</h3>
+                    <p style="font-size: 1.2rem;">We specialize in Gold (XAUUSD) trading with advanced technical analysis and proven strategies. Our expertise in precious metals trading has consistently delivered exceptional results.</p>
+                </div>
+
+                <div style="background: white; padding: 3rem; border-radius: 10px; margin-top: 3rem;">
+                    <h3 style="color: var(--primary-color); text-align: center; font-size: 2rem; margin-bottom: 2rem;">Recommended Brokers</h3>
+                    <p style="text-align: center; margin-bottom: 2rem;">We recommend these trusted and reliable brokers for your trading needs:</p>
+                    <div class="brokers-list">
+                        <span class="broker-badge">XM</span>
+                        <span class="broker-badge">FBK</span>
+                        <span class="broker-badge">JUST MARKETS</span>
+                        <span class="broker-badge">VAULT</span>
+                        <span class="broker-badge">DERIV</span>
+                        <span class="broker-badge">EXNESS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 FX PLUG/web created by MGEE:+266 63088465. All rights reserved. Professional Forex Trading Services.</p>
+                <p style="margin-top: 1rem;">Trade responsibly. Past performance does not guarantee future results.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWl0r6BN1o8aPufdw8_biL4oXWExV_7FQ",
+            authDomain: "fx-plug.firebaseapp.com",
+            projectId: "fx-plug",
+            storageBucket: "fx-plug.firebasestorage.app",
+            messagingSenderId: "980547805522",
+            appId: "1:980547805522:web:52a078fa50661a4c575a8b",
+            measurementId: "G-CSER8XM8RN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const loginSection = document.getElementById('login-section');
+        const mainContent = document.getElementById('main-content');
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginSection.style.display = 'none';
+                mainContent.style.display = 'block';
+            } else {
+                loginSection.style.display = 'flex';
+                mainContent.style.display = 'none';
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                errorMessage.style.display = 'none';
+            } catch (error) {
+                errorMessage.textContent = 'Invalid email or password. Please try again.';
+                errorMessage.style.display = 'block';
+            }
+        });
+
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
